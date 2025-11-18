@@ -1,13 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
-import { AuthUser } from "../jotai/auth.store";
 import { IAuthService } from "./IAuthService";
+import { AuthUser } from "../types";
 
 export class GuestAuthService implements IAuthService {
-  public login(): Promise<AuthUser> {
-    return Promise.resolve({
+  public async login(): Promise<AuthUser> {
+    await new Promise(r => setTimeout(r, 250))
+    return {
       id: uuidv4(),
       name: "Guest User",
       provider: "guest",
-    })
+    }
   }
 }
