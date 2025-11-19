@@ -1,46 +1,132 @@
-import { GestureResponderEvent, StyleSheet, Text, type TextStyle, TouchableOpacity, View, type ViewStyle } from "react-native";
-import {layout} from "@/constants/layout"
-import { Colors } from "@/constants/theme";
+import { layout } from "@/constants/layout";
+import {
+  woltColors,
+  woltSpacing,
+  woltRadii,
+  woltOpacity,
+} from "@/constants/theme";
+import {
+  GestureResponderEvent,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  type TextStyle,
+  type ViewStyle,
+} from "react-native";
+
+type ButtonVariants = "solid" | "outline" | "ghost" | "light";
 
 interface ButtonBaseProps {
-  text: string
-  onPress?: (event: GestureResponderEvent) => void
-  disabled?: boolean
-  icon?: React.ReactNode
-  style?: ViewStyle
-  textStyle?: TextStyle
-
+  text: string;
+  onPress?: (event: GestureResponderEvent) => void;
+  disabled?: boolean;
+  prefixIcon?: React.ReactNode;
+  style?: ViewStyle;
+  textStyle?: TextStyle;
+  variant?: ButtonVariants;
 }
 
-export function ButtonBase({text, icon, disabled, style, textStyle, onPress}: ButtonBaseProps) {
+export function ButtonBase({
+  text,
+  prefixIcon,
+  disabled,
+  style,
+  textStyle,
+  variant = "solid",
+  onPress,
+}: ButtonBaseProps) {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={onPress}
       disabled={disabled}
-      activeOpacity={0.7}
-      style={[styles.container, layout.rowCenter, disabled && styles.disabled, style]}>
-      {icon && <View style={styles.icon}>{icon}</View>}
-      <Text style={styles.text}>{text}</Text>
-    </TouchableOpacity>
-  )
+      style={({ pressed }) => [
+        styles.base,
+        layout.rowCenter,
+        variantStyles[variant].container,
+        pressed && styles.pressed,
+        disabled && styles.disabled,
+        style,
+      ]}
+    >
+      {prefixIcon && <View style={styles.icon}>{prefixIcon}</View>}
+
+      <Text
+        style={[
+          styles.text,
+          variantStyles[variant].text,
+          disabled && styles.textDisabled,
+          textStyle,
+        ]}
+      >
+        {text}
+      </Text>
+    </Pressable>
+  );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 17,
-    paddingHorizontal: 16,
-    borderRadius: 12,
-    backgroundColor: "#333"
+  base: {
+    minHeight: 36,
+    paddingVertical: 10,
+    paddingHorizontal: woltSpacing.md,
+    borderRadius: woltRadii.md,
+    gap: woltSpacing.xs,
   },
   disabled: {
-    opacity: 0.6,
+    opacity: woltOpacity.disabled,
   },
   icon: {
-    marginRight: 8
+    marginRight: 6,
+  },
+  pressed: {
+    opacity: woltOpacity.pressed,
   },
   text: {
-    color: Colors.text,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "500",
-  }
-})
+  },
+  textDisabled: {
+    color: woltColors.textMuted,
+  },
+});
+
+const variantStyles = {
+  solid: StyleSheet.create({
+    container: {
+      backgroundColor: woltColors.brandPrimary,
+    },
+    text: {
+      color: woltColors.textInverse,
+    },
+  }),
+
+  outline: StyleSheet.create({
+    container: {
+      backgroundColor: "transparent",
+      borderWidth: 1.5,
+      borderColor: woltColors.borderLight,
+    },
+    text: {
+      color: woltColors.brandPrimary,
+    },
+  }),
+
+  ghost: StyleSheet.create({
+    container: {
+      backgroundColor: "transparent",
+    },
+    text: {
+      color: woltColors.brandPrimary,
+    },
+  }),
+
+  light: StyleSheet.create({
+    container: {
+      backgroundColor: woltColors.brandPrimaryLight,
+    },
+    text: {
+      color: woltColors.brandPrimary,
+    },
+  }),
+};
