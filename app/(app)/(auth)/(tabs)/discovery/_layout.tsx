@@ -1,9 +1,9 @@
-import { Text, View } from "react-native";
+import { Stack } from "expo-router";
 
 export default function DiscoveryLayout() {
   return (
-    <View>
-      <Text>discovery layout</Text>
-    </View>
+    <Stack>
+      <Stack.Screen name="index" options={{headerShown: false}} />
+    </Stack>
   )
 }
