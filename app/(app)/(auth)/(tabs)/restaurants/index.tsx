@@ -1,6 +1,6 @@
 import { ScrollView, Text, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { RestaurantListPage } from "@/features/restaurant/ui/pages/RestaurantListPage";
+import { RestaurantListPage } from "@/features/restaurant/ui/screens/RestaurantListPage";
 import { categories } from "@/data/categories";
 import { restaurants } from "@/data/restaurants";
 
@@ -32,7 +32,7 @@ import { restaurants } from "@/data/restaurants";
 
 export default function Index() {
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View>
         {/* dropdown */}
         <View>{/* two options */}</View>

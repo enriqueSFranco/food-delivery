@@ -1,9 +1,12 @@
-import { Text, View } from "react-native";
+import { OrdersList } from "@/features/order/ui/organisms/OrdersList";
+import { View } from "react-native";
 
 export default function Page() {
+  // const {} = useOrders()
   return (
     <View>
-      <Text>discovery page</Text>
+      {/* section: order again */}
+      <OrdersList />
     </View>
   )
 }
