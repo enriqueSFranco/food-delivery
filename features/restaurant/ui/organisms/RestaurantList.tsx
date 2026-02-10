@@ -6,8 +6,8 @@ import {
   Text,
   View,
 } from "react-native";
-import { useRestaurants } from "../hooks/use-restaurants";
-import { RestaurantCard } from "./molecules/RestaurantCard";
+import { useRestaurants } from "../../hooks/use-restaurants";
+import { RestaurantCard } from "../molecules/RestaurantCard";
 
 export function RestaurantList() {
   const { data: restaurants, isLoading, isError, error } = useRestaurants();
@@ -24,16 +24,17 @@ export function RestaurantList() {
         <Text style={styles.errorTitle}>Something went wrong</Text>
         <Text style={styles.errorMessage}>{error?.message}</Text>
       </View>
-    )
+    );
   }
 
   return (
     <View>
       <Text style={styles.restaurantsTitle}>All restaurants</Text>
       <FlatList
-      contentContainerStyle={styles.restaurantsList}
-      ItemSeparatorComponent={() => <View style={styles.separator} />}
-      showsVerticalScrollIndicator={false}
+        scrollEnabled={false}
+        contentContainerStyle={styles.restaurantsList}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        showsVerticalScrollIndicator={false}
         data={restaurants}
         renderItem={({ item }) => (
           <RestaurantCard
@@ -61,6 +62,6 @@ const styles = StyleSheet.create({
     color: woltColors.textPrimary,
   },
   separator: {
-    height: 22
-  }
+    height: 22,
+  },
 });
